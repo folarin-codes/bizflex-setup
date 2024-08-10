@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bizflex-setup",
-    "slug": "bizflex-setup",
+    "name": "Bizflex",
+    "slug": "bizflex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,17 +9,19 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fastamoniorg.bizflex"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fastamoniorg.bizflex"
     },
     "web": {
       "bundler": "metro",
@@ -27,10 +29,26 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ad4a4621-1b3b-4c30-a3c8-e0fac322377c"
+      }
+    },
+    "owner": "fastamoni-org",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ad4a4621-1b3b-4c30-a3c8-e0fac322377c"
     }
   }
 }
