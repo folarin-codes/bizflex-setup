@@ -14,8 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { Controller, useForm, UseFormProps } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "@/theme/theme";
+import EyeSvg from "@/assets/svgs/EyeSvg";
+import EyeOffSvg from "@/assets/svgs/EyeOffSvg";
 
 interface CustomTextInputProps extends UseFormProps {
   style?: StyleProp<ViewStyle>;
@@ -83,11 +84,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
               />
               {secureTextEntry && showPasswordIcon && (
                 <TouchableOpacity onPress={togglePasswordVisibility}>
-                  <Ionicons
-                    name={isPasswordVisible ? "eye-off" : "eye"}
-                    size={20}
-                    color="#8C8C8C"
-                  />
+                  {isPasswordVisible ? <EyeSvg /> : <EyeOffSvg />}
                 </TouchableOpacity>
               )}
               {suffix ? suffix : null}
