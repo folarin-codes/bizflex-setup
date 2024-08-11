@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import SignUpLayout from "@/layout/SignUpLayout";
 import { COLORS } from "@/theme/theme";
 import ArrowUpSvg from "@/assets/svgs/ArrowUpSvg";
-import { useRouter } from "expo-router";
+
+import { useRouter, Href } from "expo-router";
+
 const accountType = [
   {
     id: 0,
@@ -29,9 +31,9 @@ const CreateAccount = () => {
   const router = useRouter();
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const handlePress = (id: number) => {
+  const handlePress = (id: number, screen: string) => {
     setSelectedId(id);
-    router.push("/(business-owner)/registered-business");
+    router.push(screen as Href);
   };
   return (
     <SignUpLayout>
@@ -47,7 +49,7 @@ const CreateAccount = () => {
           {accountType.map((item, index) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => handlePress(item.id)}
+              onPress={() => handlePress(item.id, item.screen)}
               style={[
                 styles.accountTypeCont,
                 {
