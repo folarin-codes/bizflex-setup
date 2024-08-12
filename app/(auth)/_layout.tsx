@@ -12,8 +12,11 @@ const AuthStack = () => {
     >
       <Stack.Screen name="get-started" />
       <Stack.Screen name="sign-up" />
-      <Stack.Screen name="sign-in" />
       <Stack.Screen name="create-password" />
+      <Stack.Screen name="verification-code" />
+      <Stack.Screen name="verification-complete" />
+      <Stack.Screen name="sign-in" />
+      <Stack.Screen name="create-account" />
     </Stack>
   );
 };
