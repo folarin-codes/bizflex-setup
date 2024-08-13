@@ -9,6 +9,13 @@ const COLORS = {
   green: "#35BA83",
   screenBackground: "#F9FBFF",
   textInput: "#0F172B",
+  navbg : '#E9EFFD',
+  text2:'#D7D7D7',
+  text3:'#444444',
+  text4:'#828282',
+  offwhite:'#FFFFFFB5',
+  success:'#00A825',
+  brown:'#F3C948'
   // textInput: "#D2D2D2",
 };
 
