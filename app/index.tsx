@@ -5,6 +5,7 @@ import { generalStyles } from "@/theme/styles";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Onboarding from "./onboarding/onboarding";
+import Toast from "react-native-toast-message";
 
 export default function Page() {
   const [fontsLoaded, fontError] = useFonts({
@@ -28,6 +29,7 @@ export default function Page() {
   return (
     <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Onboarding />
+      <Toast />
     </SafeAreaView>
   );
 }

@@ -17,8 +17,13 @@ import * as z from "zod";
 import { COLORS } from "@/theme/theme";
 import EyeSvg from "@/assets/svgs/EyeSvg";
 import EyeOffSvg from "@/assets/svgs/EyeOffSvg";
+import { Image } from "expo-image";
+import Icon, { Icons } from "./Icon";
 
-interface CustomTextInputProps extends UseFormProps {
+interface FormFieldProps extends UseFormProps {
+  label: string;
+  labelOptional?: string;
+  countryCode?: boolean;
   style?: StyleProp<ViewStyle>;
   name: string;
   control: any;
@@ -36,7 +41,10 @@ interface CustomTextInputProps extends UseFormProps {
   editable?: boolean;
 }
 
-const CustomTextInput: React.FC<CustomTextInputProps> = ({
+const FormField: React.FC<FormFieldProps> = ({
+  label,
+  labelOptional,
+  countryCode,
   style,
   name,
   control,
@@ -53,13 +61,23 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   ...otherProps
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
+  const toggleDropdown = () => {
+    setIsDropdownVisible((prev) => !prev);
+  };
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
 
   return (
     <View style={styles.inputContainer}>
+      <View style={styles.labelGroup}>
+        <Text style={styles.formLabel}>{label}</Text>
+        {labelOptional && (
+          <Text style={styles.labelOptional}>{labelOptional}</Text>
+        )}
+      </View>
       <Controller
         control={control}
         name={name}
@@ -67,7 +85,34 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <>
             <View style={[styles.inputWrapper, style]}>
-              {icon}
+              {countryCode && (
+                <>
+                  <TouchableOpacity
+                    style={styles.country}
+                    onPress={toggleDropdown}
+                  >
+                    <Image
+                      source={require("../assets/images/flag.png")}
+                      contentFit="cover"
+                      transition={1000}
+                      style={{ width: 24, height: 24, borderRadius: 24 }}
+                    />
+                    <Text>NGN</Text>
+                    <Icon
+                      type={Icons.MaterialIcons}
+                      name="keyboard-arrow-down"
+                      color="#404040"
+                      size={24}
+                    />
+                  </TouchableOpacity>
+                  {isDropdownVisible && (
+                    <View style={styles.dropdown}>
+                      {/* Render your country code dropdown here */}
+                      <Text>Dropdown Content Here</Text>
+                    </View>
+                  )}
+                </>
+              )}
               <TextInput
                 style={[styles.input, { marginLeft: icon && 14 }]}
                 placeholder={placeholder}
@@ -102,23 +147,66 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   );
 };
 
-export default CustomTextInput;
+export default FormField;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    // marginTop: 8,
     width: "100%",
+  },
+  labelGroup: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: 10,
+  },
+  labelOptional: {
+    fontFamily: "regular",
+    fontSize: 14,
+    color: "#D2D2D2",
+    marginLeft: 4,
+  },
+  formLabel: {
+    fontFamily: "medium",
+    fontSize: 14,
+    color: "#07142F",
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     borderRadius: 10,
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "#C6D8FF",
     paddingVertical: 19,
     paddingHorizontal: 20,
+  },
+
+  country: {
+    width: "25%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    //paddingVertical: 17,
+    // borderWidth: 1,
+    // borderColor: "#C6D8FF",
+    backgroundColor: "white",
+    marginRight: 14,
+  },
+  dropdown: {
+    position: "absolute",
+    top: 60, // Adjust as needed
+    left: 0,
+    right: 0,
+    backgroundColor: "white",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#C6D8FF",
+    padding: 10,
+    zIndex: 1000,
   },
   input: {
     flex: 1,

@@ -67,13 +67,11 @@ const SignIn = () => {
                 name="email"
                 placeholder="Enter email"
                 rules={{ required: "Please enter your email" }}
-                secureTextEntry={true}
-                showPasswordIcon={true}
               />
             </View>
             {/*  password */}
             <View style={styles.formItem}>
-              <Text style={styles.formLabel}>Confirm Password</Text>
+              <Text style={styles.formLabel}>Password</Text>
               <CustomTextInput
                 control={control}
                 name="password"
