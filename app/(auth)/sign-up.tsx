@@ -1,5 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SignUpLayout from "@/layout/SignUpLayout";
 import CustomTextInput from "@/components/CustomTextInput";
@@ -11,6 +17,38 @@ import CustomButton from "@/components/CustomButton";
 import CheckBox from "@/assets/svgs/CheckBox";
 import { useRouter } from "expo-router";
 import MyCheckbox from "@/components/MyCheckbox";
+import { Image } from "expo-image";
+import Icon, { Icons } from "@/components/Icon";
+import { Dropdown } from "react-native-element-dropdown";
+import FormField from "@/components/FormField";
+
+const countries = [
+  {
+    code: "+234",
+    shortName: "NGN",
+    flagUri: "https://www.example.com/flags/ng.png",
+  },
+  {
+    code: "+27",
+    shortName: "ZAR",
+    flagUri: "https://www.example.com/flags/za.png",
+  },
+  {
+    code: "+254",
+    shortName: "KES",
+    flagUri: "https://www.example.com/flags/ke.png",
+  },
+  {
+    code: "+233",
+    shortName: "GHS",
+    flagUri: "https://www.example.com/flags/gh.png",
+  },
+  {
+    code: "+20",
+    shortName: "EGP",
+    flagUri: "https://www.example.com/flags/eg.png",
+  },
+];
 
 const signUpSchema = z.object({
   firstName: z.string().trim().min(1, "Please enter your first name"),
@@ -20,12 +58,12 @@ const signUpSchema = z.object({
     .min(0, "Please enter your middle name")
     .optional(),
   surname: z.string().trim().min(1, "Please enter your last name"),
-  //   phoneNumber: z
-  //     .string()
-  //     .min(11, "Please enter your phone number")
-  //     .regex(/^(?:(?:\+?234)|0)?[789][01]\d{8}$/, {
-  //       message: "Phone Number is invalid",
-  //     }),
+  phoneNumber: z
+    .string()
+    .min(11, "Please enter your phone number")
+    .regex(/^(?:(?:\+?234)|0)?[789][01]\d{8}$/, {
+      message: "Phone Number is invalid",
+    }),
   email: z.string().trim().email("Please enter your email"),
   referralCode: z.string().optional(),
 });
@@ -34,6 +72,19 @@ type signUpType = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const router = useRouter();
+
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleSelectCountry = (country: any) => {
+    setSelectedCountry(country);
+    setDropdownVisible(false);
+  };
+
   const {
     control,
     handleSubmit,
@@ -44,7 +95,7 @@ const SignUp = () => {
       firstName: "",
       middleName: "",
       surname: "",
-      //phoneNumber: "",
+      phoneNumber: "",
       email: "",
       referralCode: "",
     },
@@ -67,54 +118,83 @@ const SignUp = () => {
         </View>
 
         <View style={styles.formContainer}>
-          {/* first name */}
+          <FormField
+            label="First Name"
+            control={control}
+            name="firstName"
+            placeholder="Enter first name"
+            rules={{ required: "Please enter your first name" }}
+          />
+
+          <FormField
+            label="Middle Name"
+            control={control}
+            name="middleName"
+            placeholder="Enter middle Name (Optional)"
+            rules={{ required: "Please enter your middle name" }}
+          />
+
+          <FormField
+            label="Surname Name"
+            control={control}
+            name="surname"
+            placeholder="Enter Surname (Family Name)"
+            rules={{ required: "Please enter your surname name" }}
+          />
+          <FormField
+            label="Phone Number"
+            control={control}
+            name="phoneNumber"
+            placeholder="Enter phone number"
+            countryCode={true}
+          />
+
+          <FormField
+            label="Email"
+            control={control}
+            name="email"
+            placeholder="Enter Email"
+            rules={{ required: "Please enter your email" }}
+          />
+          <FormField
+            label="Referral Code"
+            control={control}
+            name="referralCode"
+            placeholder="Enter referral code"
+          />
+
+          {/* phoneNumber */}
           <View style={styles.formItem}>
-            <Text style={styles.formLabel}>First Name</Text>
-            <CustomTextInput
-              control={control}
-              name="firstName"
-              placeholder="Enter First Name"
-              rules={{ required: "Please enter your first name" }}
-            />
-          </View>
-          {/* middle name */}
-          <View style={styles.formItem}>
-            <Text style={styles.formLabel}>Middle Name</Text>
-            <CustomTextInput
-              control={control}
-              name="middleName"
-              placeholder="Enter middle Name (Optional)"
-              rules={{ required: "Please enter your middle name" }}
-            />
-          </View>
-          {/* last name */}
-          <View style={styles.formItem}>
-            <Text style={styles.formLabel}>Surname Name</Text>
-            <CustomTextInput
-              control={control}
-              name="surname"
-              placeholder="Enter Surname (Family Name)"
-              rules={{ required: "Please enter your surname name" }}
-            />
-          </View>
-          {/* email */}
-          <View style={styles.formItem}>
-            <Text style={styles.formLabel}>Email</Text>
-            <CustomTextInput
-              control={control}
-              name="email"
-              placeholder="Enter Email"
-              rules={{ required: "Please enter your email" }}
-            />
-          </View>
-          {/* referral code */}
-          <View style={styles.formItem}>
-            <Text style={styles.formLabel}>Referral Code</Text>
-            <CustomTextInput
-              control={control}
-              name="referralCode"
-              placeholder="Enter referral code"
-            />
+            {/* <Text style={styles.formLabel}>Phone Number</Text>
+            <View style={styles.phoneNumberCont}>
+              <TouchableOpacity style={styles.country} onPress={toggleDropdown}>
+                <Image
+                  source={require("../../assets/images/flag.png")}
+                  contentFit="cover"
+                  transition={1000}
+                  style={{ width: 24, height: 24, borderRadius: 24 }}
+                />
+                <Text>NGN</Text>
+                <Icon
+                  type={Icons.MaterialIcons}
+                  name="keyboard-arrow-down"
+                  color="#404040"
+                  size={24}
+                />
+              </TouchableOpacity>
+              <View style={{ width: "70%" }}>
+                <CustomTextInput
+                  control={control}
+                  name="phoneNumber"
+                  placeholder="Enter phone number"
+                  rules={{ required: "Please enter your phone number" }}
+                  style={{
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  }}
+                />
+              </View>
+            </View> */}
           </View>
         </View>
 
@@ -170,6 +250,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#07142F",
   },
+  phoneNumberCont: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    // borderWidth: 1,
+    // borderColor: "red",
+  },
+  country: {
+    width: "30%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    paddingVertical: 17,
+    borderWidth: 1,
+    borderColor: "#C6D8FF",
+    backgroundColor: "white",
+  },
   termsCont: {
     flexDirection: "row",
     gap: 12,
@@ -192,4 +294,46 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#8E949A",
   },
+
+  //test
+  phoneNumberCont: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  // country: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "space-between",
+  //   width: "30%",
+  //   padding: 10,
+  // },
+  flag: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    // marginRight: 8,
+  },
+  // countryName: {
+  //   flex: 1,
+  // },
+  countryCode: {
+    marginLeft: 8,
+  },
+  // dropdown: {
+  //   position: "absolute",
+  //   top: 60, // Adjust based on your layout
+  //   width: "100%",
+  //   backgroundColor: "white",
+  //   borderRadius: 8,
+  //   borderWidth: 1,
+  //   borderColor: "#ddd",
+  //   elevation: 5,
+  // },
+  // countryItem: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   padding: 10,
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: "#ddd",
+  // },
 });
