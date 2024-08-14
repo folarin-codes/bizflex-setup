@@ -161,12 +161,14 @@ const styles = StyleSheet.create({
   },
   labelOptional: {
     fontFamily: "regular",
+    fontWeight: "400",
     fontSize: 14,
     color: "#D2D2D2",
     marginLeft: 4,
   },
   formLabel: {
     fontFamily: "medium",
+    fontWeight: "500",
     fontSize: 14,
     color: "#07142F",
   },

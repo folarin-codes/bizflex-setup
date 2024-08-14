@@ -4,22 +4,18 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SignUpLayout from "@/layout/SignUpLayout";
-import CustomTextInput from "@/components/CustomTextInput";
 import { COLORS } from "@/theme/theme";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomButton from "@/components/CustomButton";
-import CheckBox from "@/assets/svgs/CheckBox";
 import { useRouter } from "expo-router";
-import MyCheckbox from "@/components/MyCheckbox";
-import { Image } from "expo-image";
 import Icon, { Icons } from "@/components/Icon";
-import { Dropdown } from "react-native-element-dropdown";
 import FormField from "@/components/FormField";
 
 const countries = [
@@ -72,18 +68,7 @@ type signUpType = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const router = useRouter();
-
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
-  const handleSelectCountry = (country: any) => {
-    setSelectedCountry(country);
-    setDropdownVisible(false);
-  };
+  const [checked, setChecked] = useState(true);
 
   const {
     control,
@@ -104,7 +89,9 @@ const SignUp = () => {
 
   const onSubmit = async (data: signUpType) => {
     console.log(data);
-    router.push("/(auth)/create-password");
+    if (data && checked) {
+      router.push("/(auth)/create-password");
+    }
   };
 
   return (
@@ -162,48 +149,18 @@ const SignUp = () => {
             name="referralCode"
             placeholder="Enter referral code"
           />
-
-          {/* phoneNumber */}
-          <View style={styles.formItem}>
-            {/* <Text style={styles.formLabel}>Phone Number</Text>
-            <View style={styles.phoneNumberCont}>
-              <TouchableOpacity style={styles.country} onPress={toggleDropdown}>
-                <Image
-                  source={require("../../assets/images/flag.png")}
-                  contentFit="cover"
-                  transition={1000}
-                  style={{ width: 24, height: 24, borderRadius: 24 }}
-                />
-                <Text>NGN</Text>
-                <Icon
-                  type={Icons.MaterialIcons}
-                  name="keyboard-arrow-down"
-                  color="#404040"
-                  size={24}
-                />
-              </TouchableOpacity>
-              <View style={{ width: "70%" }}>
-                <CustomTextInput
-                  control={control}
-                  name="phoneNumber"
-                  placeholder="Enter phone number"
-                  rules={{ required: "Please enter your phone number" }}
-                  style={{
-                    borderTopLeftRadius: 0,
-                    borderBottomLeftRadius: 0,
-                  }}
-                />
-              </View>
-            </View> */}
-          </View>
         </View>
 
         <View style={styles.termsCont}>
-          {/* <View style={styles.checkBox}>
-           
-            <CheckBox />
-          </View> */}
-          <MyCheckbox />
+          <Pressable
+            style={[styles.checkboxBase, checked && styles.checkboxChecked]}
+            onPress={() => setChecked(!checked)}
+          >
+            {checked && (
+              <Icon type={Icons.Feather} name="check" color="white" size={24} />
+            )}
+          </Pressable>
+
           <Text style={styles.terms}>
             I agree with{" "}
             <Text style={{ color: COLORS.primary }}>Terms & Conditions</Text>
@@ -272,6 +229,7 @@ const styles = StyleSheet.create({
     borderColor: "#C6D8FF",
     backgroundColor: "white",
   },
+
   termsCont: {
     flexDirection: "row",
     gap: 12,
@@ -279,15 +237,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginTop: 44,
   },
-  checkBox: {
+  checkboxBase: {
     width: 24,
     height: 24,
-    borderWidth: 1.5,
-    borderColor: "#292D32",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 4,
-    //backgroundColor: COLORS.primary,
-    alignSelf: "center",
+    // borderWidth: 2,
+    // borderColor: "coral",
+    //backgroundColor: "transparent",
+    backgroundColor: COLORS.primary,
   },
+  checkboxChecked: {
+    backgroundColor: COLORS.primary,
+  },
+
   terms: {
     fontFamily: "regular",
     fontSize: 12,
@@ -295,45 +259,14 @@ const styles = StyleSheet.create({
     color: "#8E949A",
   },
 
-  //test
-  phoneNumberCont: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  // country: {
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   justifyContent: "space-between",
-  //   width: "30%",
-  //   padding: 10,
-  // },
   flag: {
     width: 24,
     height: 24,
     borderRadius: 12,
     // marginRight: 8,
   },
-  // countryName: {
-  //   flex: 1,
-  // },
+
   countryCode: {
     marginLeft: 8,
   },
-  // dropdown: {
-  //   position: "absolute",
-  //   top: 60, // Adjust based on your layout
-  //   width: "100%",
-  //   backgroundColor: "white",
-  //   borderRadius: 8,
-  //   borderWidth: 1,
-  //   borderColor: "#ddd",
-  //   elevation: 5,
-  // },
-  // countryItem: {
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   padding: 10,
-  //   borderBottomWidth: 1,
-  //   borderBottomColor: "#ddd",
-  // },
 });

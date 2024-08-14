@@ -2,17 +2,17 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   KeyboardAvoidingView,
+  TextInput,
 } from "react-native";
 import React, { useState, useRef, RefObject } from "react";
 import SignUpLayout from "@/layout/SignUpLayout";
-import { COLORS } from "@/theme/theme";
-import CustomButton from "@/components/CustomButton";
-import { useRouter } from "expo-router";
 import CustomOTPInput from "@/components/CustomOTPInput";
+import { COLORS } from "@/theme/theme";
+import { useRouter } from "expo-router";
+import CustomButton from "@/components/CustomButton";
 
-const VerificationCode = () => {
+const BvnConfirmation = () => {
   const [codes, setCodes] = useState<string[]>(Array(4).fill(""));
   const [errorMessages, setErrorMessages] = useState<string[]>();
   const router = useRouter();
@@ -48,7 +48,7 @@ const VerificationCode = () => {
   async function verifyPhoneNumberAndProgress() {
     const fullCode = codes!.join("");
     console.log(fullCode);
-    router.push("/(auth)/verification-complete");
+    router.push("/(business-owner)/business-directors-others");
     try {
       //LOG
     } catch (err: unknown) {
@@ -58,12 +58,12 @@ const VerificationCode = () => {
 
   return (
     <SignUpLayout>
-      <View style={styles.container}>
+      <View style={{ flex: 1 }}>
         <View style={styles.headerGroup}>
-          <Text style={styles.headerTitle}>Verification Code</Text>
+          <Text style={styles.headerTitle}>BVN Confirmation</Text>
           <Text style={styles.headerDes}>
-            Kindly input the code sent to {"\n"} 0816****844 &
-            Adetola******@gmail.com
+            Kindly input the OTP code sent to the mobile number {"\n"} attached
+            to your BVN to proceed.
           </Text>
         </View>
 
@@ -78,12 +78,18 @@ const VerificationCode = () => {
 
         <CustomButton
           title="Proceed"
-          style={{ marginTop: 36, marginBottom: 28 }}
+          style={{ marginTop: "30%", marginBottom: 28 }}
           disabled={isButtonDisabled()}
           onPress={verifyPhoneNumberAndProgress}
         />
 
-        <View style={{ width: "100%" }}>
+        <View
+          style={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Text style={styles.resendText}>
             Didn't get code.{" "}
             <Text
@@ -99,14 +105,9 @@ const VerificationCode = () => {
   );
 };
 
-export default VerificationCode;
+export default BvnConfirmation;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
   headerGroup: {
     alignItems: "center",
     justifyContent: "center",

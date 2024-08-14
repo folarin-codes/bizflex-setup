@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   placeholderStyle: {
-    color: COLORS.textInput,
+    color: "#D2D2D2",
     fontSize: 14,
     fontWeight: "400",
   },
