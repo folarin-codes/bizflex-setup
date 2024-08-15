@@ -107,7 +107,7 @@ const BusinessDirectorMain = () => {
     }
   }, [documents, setValue]);
 
-  console.log("cxccs", watch("utilityBill"));
+  console.log("utilityBill", watch("utilityBill"));
 
   const onSubmit = async (data: directorSchemaType) => {
     console.log(data);
