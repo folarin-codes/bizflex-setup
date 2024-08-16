@@ -30,9 +30,8 @@ const GetStarted = () => {
           <CustomButton
             title={"Create Account"}
             style={{}}
-            onPress={() => router.push("/(business-owner)/directors")}
-            // onPress={() => router.push("/(auth)/sign-up")}
-            //onPress={() => router.push("/home")}
+            //onPress={() => router.push("/(business-owner)/directors")}
+            onPress={() => router.push("/(auth)/sign-up")}
           />
         </View>
       </View>

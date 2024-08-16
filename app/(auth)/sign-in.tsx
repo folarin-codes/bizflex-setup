@@ -45,6 +45,7 @@ const SignIn = () => {
 
   const onSubmit = async (data: signInSchemaType) => {
     console.log(data);
+    router.push("/home");
   };
 
   return (
@@ -61,7 +62,7 @@ const SignIn = () => {
           <View style={styles.formContainer}>
             {/* email */}
             <View style={styles.formItem}>
-              <Text style={styles.formLabel}>Password</Text>
+              <Text style={styles.formLabel}>Email</Text>
               <CustomTextInput
                 control={control}
                 name="email"
