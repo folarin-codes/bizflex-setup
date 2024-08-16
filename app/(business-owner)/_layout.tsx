@@ -11,6 +11,7 @@ const BusinessOwnerStack = () => {
       }}
     >
       <Stack.Screen name="registered-business" />
+      {/* <Stack.Screen name="directors" /> */}
     </Stack>
   );
 };

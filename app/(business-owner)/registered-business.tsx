@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Button } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignUpLayout from "@/layout/SignUpLayout";
 import { COLORS } from "@/theme/theme";
 import AccountTypeHeader from "@/components/AccountTypeHeader";
@@ -12,13 +12,12 @@ import UploadDocSvg from "@/assets/svgs/UploadDocSvg";
 import DropDownField from "@/components/DropDownField";
 import CustomButton from "@/components/CustomButton";
 import * as DocumentPicker from "expo-document-picker";
-import useToast from "@/hooks/useToast";
-import Toast from "react-native-toast-message";
 
 const businessDetailsSchema = z.object({
   businessName: z.string().trim().min(1, "Please enter your business name"),
   businessType: z.string().trim().min(1, "Please enter your business type"),
-  officeNumber: z.number().int().min(1, "Please enter a valid office number"),
+  //officeNumber: z.string().trim().min(1, "Please enter a valid office number"),
+  officeNumber: z.coerce.number().min(1, "Please enter a valid office number"),
   officeAddress: z.string().trim().min(1, "Please enter your office address"),
   cacNumber: z.string().trim().min(1, "Please enter your CAC number"),
   tinNumber: z.string().trim().min(1, "Please enter your TIN number"),
@@ -40,12 +39,15 @@ const businessDetailsSchema = z.object({
       (value) => value !== null && value !== undefined,
       "Memart Document is required"
     ),
+  // cacDocument: z.string().min(1, "CAC Document is required"),
+  // utilityBill: z.string().min(1, "Utility Bill is required"),
+  // memart: z.string().min(1, "Memart Document is required"),
 });
 
 type DocumentType = {
-  "CAC Certificate": string | null;
-  Utility: string | null;
-  Memart: string | null;
+  "CAC Certificate": null;
+  Utility: null;
+  Memart: null;
 };
 
 type BusinessDetailsSchemaType = z.infer<typeof businessDetailsSchema>;
@@ -58,8 +60,6 @@ const RegisteredBusiness = () => {
     Utility: null,
     Memart: null,
   });
-
-  console.log(documents);
 
   const {
     control,
@@ -82,10 +82,9 @@ const RegisteredBusiness = () => {
     resolver: zodResolver(businessDetailsSchema),
   });
 
-  const onSubmit = async (data: BusinessDetailsSchemaType) => {
-    console.log(data);
-    router.push("/(auth)/create-password");
-  };
+  // console.log("cacDocument", watch("cacDocument"));
+  // console.log("utilityBill", watch("utilityBill"));
+  // console.log("memart", watch("memart"));
 
   const pickDocument = async (description: string) => {
     try {
@@ -95,11 +94,9 @@ const RegisteredBusiness = () => {
       if (result?.assets && result.assets.length > 0) {
         const file = result.assets[0];
         const fileSizeInMB = file.size / (1024 * 1024);
-
         console.log("File size in MB:", fileSizeInMB);
 
         if (fileSizeInMB <= 2) {
-          setValue("cacDocument", file.uri);
           const updatedDocuments = {
             ...documents,
             [description]: file,
@@ -109,7 +106,7 @@ const RegisteredBusiness = () => {
           console.log("File size exceeds 2MB"); //call use toast
         }
       } else {
-        setDocuments((prevDocuments) => ({
+        setDocuments((prevDocuments: DocumentType) => ({
           ...prevDocuments,
           [description]: null,
         }));
@@ -117,6 +114,30 @@ const RegisteredBusiness = () => {
     } catch (error) {
       console.error("Error selecting document:", error);
     }
+  };
+
+  useEffect(() => {
+    Object.entries(documents).forEach(([key, document]) => {
+      if (document) {
+        const fieldName =
+          key === "CAC Certificate"
+            ? "cacDocument"
+            : key === "Utility"
+            ? "utilityBill"
+            : key === "Memart"
+            ? "memart"
+            : null;
+
+        if (fieldName) {
+          setValue(fieldName, document.uri || "");
+        }
+      }
+    });
+  }, [documents, setValue]);
+
+  const onSubmit = async (data: BusinessDetailsSchemaType) => {
+    console.log(data);
+    router.push("/(business-owner)/directors");
   };
 
   return (
@@ -222,15 +243,16 @@ const RegisteredBusiness = () => {
                 </TouchableOpacity>
               )}
             />
-            <Text style={styles.fileName}>
-              {documents["CAC Certificate"]
-                ? documents["CAC Certificate"].name
-                : null}
-            </Text>
-            {errors.cacDocument && (
-              <Text style={styles.errorWarning}>
-                {errors.cacDocument.message}
+            {documents?.["CAC Certificate"] ? (
+              <Text style={styles.fileName}>
+                {documents["CAC Certificate"]?.name || null}
               </Text>
+            ) : (
+              errors.cacDocument && (
+                <Text style={styles.errorWarning}>
+                  {errors.cacDocument.message}
+                </Text>
+              )
             )}
           </View>
 
@@ -260,12 +282,12 @@ const RegisteredBusiness = () => {
               />
               <Controller
                 control={control}
-                name="utilityBill"
+                name="memart"
                 render={({ field: { onChange, value } }) => (
                   <TouchableOpacity
                     activeOpacity={0.6}
                     style={styles.memart}
-                    onPress={() => pickDocument("Utility")}
+                    onPress={() => pickDocument("Memart")}
                   >
                     <UploadDocSvg />
                     <View style={styles.uploadTextGroup}>
@@ -284,8 +306,13 @@ const RegisteredBusiness = () => {
               </Text>
             )}
             <Text style={styles.fileName}>
-              {documents["Utility"] || documents["Memart"]
-                ? documents["Utility"].name || documents["Memart"].name
+              {documents && (documents["Utility"] || documents["Memart"])
+                ? documents["Utility"]?.name || documents["Memart"]?.name
+                : null}
+            </Text>
+            <Text style={styles.fileName}>
+              {documents && documents["Memart"]
+                ? documents["Memart"]?.name
                 : null}
             </Text>
           </View>
