@@ -11,15 +11,15 @@ import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 
 
-const airtime = require('../../assets/images/airtime.png')
+const data = require('../../assets/images/data2.png')
 
 
-const Airtime = ()=>{
+const Data = ()=>{
     return(
 
         <SafeAreaView style={generalStyles.container}>
 
-            <CustomHeader text="Airtime" image={airtime}/>
+            <CustomHeader text="Data" image={data}/>
 
 
             <View style={{marginTop:20}}>
@@ -53,11 +53,20 @@ const Airtime = ()=>{
                 <Text style={[styles.text, {marginTop:20}]}>Network</Text>
 
                 <View style={{marginTop:20}}>
-                    <Text style={styles.text}>Enter Amount</Text>
+                    <Text style={styles.text}>Plan</Text>
+                    <View>
+                        <TextInput style={[styles.input, {fontFamily:'regular'}]} placeholder="Select preferred plan"/>
+                        <Image style={{height:24, width:24,position:'absolute', right:20, top:15}} source={require('../../assets/images/arrow-down.png')}/>
+
+                    </View>
+                </View>
+
+                <View style={{marginTop:20}}>
+                    <Text style={styles.text}>Amount</Text>
 
                     <TextInput style={[styles.input, {paddingVertical:20, textAlign:'center'}]} placeholder="₦0.00"/>
 
-                    <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
+                    {/* <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
                         <TouchableOpacity style={styles.amount}>
                             <Text style={styles.amountText}>₦100.00</Text>
                         </TouchableOpacity>
@@ -70,7 +79,8 @@ const Airtime = ()=>{
                         <TouchableOpacity style={styles.amount}>
                             <Text style={styles.amountText}>₦1000.00</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
+
                 </View>
 
                 <View style={{marginTop:20}}>
@@ -82,7 +92,7 @@ const Airtime = ()=>{
                     </View>
                 </View>
 
-                <View style={{marginTop:height(20)}}>
+                <View style={{marginTop:height(12)}}>
                     <CustomButton title="Proceed" onPress={()=> router.push('/summary')}/>
                 </View>
 
@@ -93,7 +103,7 @@ const Airtime = ()=>{
     )
 }
 
-export default Airtime;
+export default Data;
 
 
 const styles = StyleSheet.create({
