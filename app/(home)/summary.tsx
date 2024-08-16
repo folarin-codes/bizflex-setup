@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import { generalStyles } from "@/theme/styles";
 import CustomHeader from "@/components/CustomHeader";
-import { View, Text , Image, ImageBackground, StyleSheet} from "react-native";
+import { View, Text , Image, ImageBackground, StyleSheet, ScrollView} from "react-native";
 import CustomButton from "@/components/CustomButton";
 import { COLORS, SIZES } from "@/theme/theme";
 import { height, size } from "react-native-responsive-sizes";
@@ -17,7 +17,7 @@ const Summary = ()=>{
         <SafeAreaView style={generalStyles.container}>
             <CustomHeader text="Airtime" image={airtime}/>
 
-            <View>
+            <View >
 
                 <View style={{backgroundColor:COLORS.primary, padding:20, borderRadius:14, flexDirection:'row', gap:10, marginVertical:20}}>
                     <Image style={{height:40 , width:40}} source={require('../../assets/images/review.png')}/>
@@ -53,7 +53,7 @@ const Summary = ()=>{
                     </View>
                 </ImageBackground>
 
-                <View style={{marginTop:height(30)}}>
+                <View style={{marginVertical:height(20)}}>
                     <CustomButton title="Pay" onPress={()=> router.push('/transaction-pin')}/>
                 </View>
 

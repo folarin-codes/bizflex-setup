@@ -1,6 +1,6 @@
 import React from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { View, Text, ImageBackground, Image, StyleSheet,Dimensions, TouchableOpacity } from "react-native"
+import { View, Text, ImageBackground, Image, StyleSheet,Dimensions, TouchableOpacity, ScrollView } from "react-native"
 import {  size } from "react-native-responsive-sizes"
 import { StatusBar } from "react-native"
 
@@ -16,7 +16,7 @@ const Home = ()=>{
         <SafeAreaView style={{backgroundColor: COLORS.screenBackground, flex:1}}>
             <StatusBar translucent backgroundColor="transparent"/>
 
-            <View>
+            <ScrollView showsHorizontalScrollIndicator={false}>
 
                 <ImageBackground style={{width:width, paddingHorizontal:size(20),paddingTop:10}} source={require('../../assets/images/home-bg.png')} >
                     <View style={styles.container}>
@@ -111,7 +111,7 @@ const Home = ()=>{
                     </View>
                 </View>
 
-            </View>
+            </ScrollView>
 
   
         
