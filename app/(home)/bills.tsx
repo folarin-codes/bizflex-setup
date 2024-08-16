@@ -49,7 +49,7 @@ const Bills = ()=>{
 
                         <View style={{gap:20, marginTop:40}}>
 
-                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=> router.push('/data')}>
+                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=> {dataRef.current.close(); router.push('/data')}}>
                             <View style={[styles.containerSecondary, {padding:10}]}>
                                 <Image style={styles.image2} source={require('../../assets/images/single.png')}/>
                                 <Text style={styles.text}>To a single number</Text>
@@ -61,7 +61,7 @@ const Bills = ()=>{
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=> router.push('/data-bulk')}>
+                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=>{dataRef.current.close(); router.push('/data-bulk')}}>
                             <View style={[styles.containerSecondary, {padding:10}]}>
                                 <Image style={styles.image2} source={require('../../assets/images/bulk.png')}/>
                                 <Text style={styles.text}>Make a bulk purchase</Text>
@@ -183,7 +183,7 @@ const Bills = ()=>{
 
                         <View style={{gap:20, marginTop:40}}>
 
-                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=> router.push('/airtime')}>
+                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=>{sheetRef.current.close();  router.push('/airtime')} }>
                             <View style={[styles.containerSecondary, {padding:10}]}>
                                 <Image style={styles.image2} source={require('../../assets/images/single.png')}/>
                                 <Text style={styles.text}>To a single number</Text>
@@ -195,7 +195,7 @@ const Bills = ()=>{
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=> router.push('/airtime-bulk')}>
+                        <TouchableOpacity style={[styles.billContainer, {borderColor:'#E7E8EA'}]} onPress={()=>{ sheetRef.current.close(); router.push('/airtime-bulk');}}>
                             <View style={[styles.containerSecondary, {padding:10}]}>
                                 <Image style={styles.image2} source={require('../../assets/images/bulk.png')}/>
                                 <Text style={styles.text}>Make a bulk purchase</Text>

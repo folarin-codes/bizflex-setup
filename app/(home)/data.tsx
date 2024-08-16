@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import React from "react"
 import { generalStyles } from "@/theme/styles";
 import CustomHeader from "@/components/CustomHeader";
-import {View, Text, TextInput, Image, Pressable, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, TextInput, Image, Pressable, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 import { fontSize, height } from "react-native-responsive-sizes";
 
 import { COLORS, SIZES } from "@/theme/theme";
@@ -22,7 +22,7 @@ const Data = ()=>{
             <CustomHeader text="Data" image={data}/>
 
 
-            <View style={{marginTop:20}}>
+            <ScrollView style={{marginTop:20}} showsVerticalScrollIndicator={false}>
                 <Text style={styles.text}>Add Mobile Number</Text>
                 <Text style={{fontFamily:'regular', color:COLORS.text4}}>Enter recipient mobile number</Text>
                 <View style={{marginTop:20}}>
@@ -92,12 +92,12 @@ const Data = ()=>{
                     </View>
                 </View>
 
-                <View style={{marginTop:height(12)}}>
+                <View style={{marginTop:height(8)}}>
                     <CustomButton title="Proceed" onPress={()=> router.push('/summary')}/>
                 </View>
 
          
-            </View>
+            </ScrollView>
 
         </SafeAreaView>
     )
