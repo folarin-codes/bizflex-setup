@@ -37,9 +37,7 @@ const BusinessDirectorsOthers = () => {
   const numOfDirectors = 3;
   const flatListRef = useRef<FlatListType<any> | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  // const [documents, setDocuments] = useState<any>({
-  //   Utility: null,
-  // });
+
   const [documents, setDocuments] = useState<Array<{ Utility: any }>>(
     Array(numOfDirectors).fill({ Utility: null })
   );
@@ -129,7 +127,7 @@ const BusinessDirectorsOthers = () => {
 
   const directorsDetails = watch("directors");
 
-  console.log("watch", watch("directors"));
+  //console.log("watch", watch("directors"));
 
   const pickDocument = async (index: number) => {
     try {
@@ -169,10 +167,32 @@ const BusinessDirectorsOthers = () => {
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     console.log("Form Data Submitted:", data);
-    //router.push("/(business-owner)/bvn-confirmation");
+    router.push("/(business-owner)/add-signatories-onboarding");
   };
 
-  const handleIndexNav = () => {};
+  // Scroll to the specific form field
+  const navigateToFormField = (index: number) => {
+    setActiveIndex(index);
+
+    flatListRef.current?.scrollToIndex({
+      index,
+      animated: true,
+    });
+  };
+
+  const handleBackPress = () => {
+    if (activeIndex === 0) {
+      router.back();
+    } else {
+      // Move to the previous index in the FlatList
+      const previousIndex = activeIndex - 1;
+      setActiveIndex(previousIndex);
+      flatListRef.current?.scrollToIndex({
+        index: previousIndex,
+        animated: true,
+      });
+    }
+  };
 
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <View style={styles.main}>
@@ -183,46 +203,52 @@ const BusinessDirectorsOthers = () => {
         totalSteps={6}
       />
 
-      {activeIndex === 2 && (
+      {numOfDirectors > 1 && activeIndex === numOfDirectors - 1 && (
         <View style={styles.directorCont}>
-          {directorsDetails?.slice(0, 2)?.map((item: any, index) => (
-            <TouchableOpacity style={styles.director} key={index}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "500",
-                  fontFamily: "medium",
-                  color: "white",
-                }}
+          {directorsDetails
+            ?.slice(0, numOfDirectors - 1)
+            ?.map((item: any, index) => (
+              <TouchableOpacity
+                style={styles.director}
+                key={index}
+                onPress={() => navigateToFormField(index)}
               >
-                {item?.firstName}
-              </Text>
-              <View style={styles.directorsBottom}>
                 <Text
                   style={{
-                    fontSize: 10,
-                    fontWeight: "400",
-                    fontFamily: "regular",
+                    fontSize: 12,
+                    fontWeight: "500",
+                    fontFamily: "medium",
                     color: "white",
                   }}
                 >
-                  Director {index + 1}
+                  {item?.firstName}
                 </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 4,
-                  }}
-                >
-                  <EditDirectorSvg />
+                <View style={styles.directorsBottom}>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "400",
+                      fontFamily: "regular",
+                      color: "white",
+                    }}
+                  >
+                    Director {index + 1}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <EditDirectorSvg />
 
-                  <EditDirectorSvg2 />
+                    <EditDirectorSvg2 />
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
         </View>
       )}
 
@@ -394,7 +420,7 @@ const BusinessDirectorsOthers = () => {
 
       <CustomButton
         title={"Update"}
-        disabled={!isDirty}
+        disabled={activeIndex < numOfDirectors - 1 || !isDirty}
         style={{ marginTop: activeIndex < numOfDirectors - 1 ? 0 : 32 }}
         onPress={handleSubmit(onSubmit)}
       />
@@ -406,10 +432,7 @@ const BusinessDirectorsOthers = () => {
       style={styles.container}
       edges={["right", "left", "top", "bottom"]}
     >
-      <Pressable
-        style={{ paddingHorizontal: 24 }}
-        onPress={() => router.back()}
-      >
+      <Pressable style={{ paddingHorizontal: 24 }} onPress={handleBackPress}>
         <GoBack />
       </Pressable>
       <KeyboardAwareScrollView
