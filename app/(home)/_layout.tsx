@@ -14,6 +14,10 @@ const HomeLayout = ()=>{
             <Stack.Screen name="transaction-pin"/>
             <Stack.Screen name="success"/>
             <Stack.Screen name='airtime-bulk'/>
+            <Stack.Screen name='data'/>
+            <Stack.Screen name='data-bulk'/>
+            <Stack.Screen name='electricity'/>
+            <Stack.Screen name='cable'/>
 
         </Stack>
     )

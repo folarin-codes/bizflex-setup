@@ -10,17 +10,17 @@ import RBSheet from "react-native-raw-bottom-sheet";
 
 
 
-const AirtimeBulk = ()=>{
+const DataBulk = ()=>{
 
     const bulkRef = useRef()
 
     return(
         <SafeAreaView style={generalStyles.container}>
-            <CustomHeader text="Airtime Bulk Purchase"/>
+            <CustomHeader text="Data Bulk Purchase"/>
 
             <ImageBackground source={require('../../assets/images/Top.png')} style={{paddingVertical:42, marginTop:20}}>
 
-                <Text style={{textAlign:'center'}}>Total</Text>
+                <Text style={{textAlign:'center', color:COLORS.white, fontSize:size(16)}}>Total</Text>
 
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:10}}>
                     <Text style={{textAlign:'center', color:COLORS.brown, fontFamily:'semibold', fontSize:size(SIZES.larger)}}>₦0.00</Text>
@@ -121,7 +121,7 @@ const AirtimeBulk = ()=>{
     )
 }
 
-export default AirtimeBulk;
+export default DataBulk;
 
 const styles = StyleSheet.create({
     option:{
