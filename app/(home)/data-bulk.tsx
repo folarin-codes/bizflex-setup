@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {View,Image, ImageBackground, Text, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
+import {View,Image, ImageBackground, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView} from 'react-native'
 import CustomHeader from "@/components/CustomHeader";
 import { generalStyles } from "@/theme/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +17,8 @@ const DataBulk = ()=>{
     return(
         <SafeAreaView style={generalStyles.container}>
             <CustomHeader text="Data Bulk Purchase"/>
+
+            <ScrollView showsVerticalScrollIndicator={false}>        
 
             <ImageBackground source={require('../../assets/images/Top.png')} style={{paddingVertical:42, marginTop:20}}>
 
@@ -55,9 +57,11 @@ const DataBulk = ()=>{
                 <Text style={{textAlign:'center', fontFamily:'regular', color:COLORS.text3}}>You currently do not have any bulk purchase</Text>
             </View>
 
-            <View style={{marginTop:height(15)}}>
+            <View style={{marginTop:height(10)}}>
                 <CustomButton title="Proceed" disabled/>
             </View>
+
+            </ScrollView>
 
             <RBSheet ref={bulkRef} customStyles={{
                 container:{
@@ -105,8 +109,8 @@ const DataBulk = ()=>{
 
                         </View>
 
-                        <View style={{marginVertical:30}}> 
-                            <CustomButton title="Proceed" disabled/>
+                        <View style={{marginTop:30}}> 
+                             <CustomButton title="Proceed" disabled/>
                         </View>
 
                     </View>

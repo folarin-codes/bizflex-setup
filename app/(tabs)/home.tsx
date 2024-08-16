@@ -13,12 +13,12 @@ const {height , width } = Dimensions.get('window')
 
 const Home = ()=>{
     return(
-        <SafeAreaView style={{backgroundColor: COLORS.screenBackground, flex:1}}>
-            <StatusBar translucent backgroundColor="transparent"/>
+        <View style={{backgroundColor: COLORS.screenBackground, flex:1}}>
+            <StatusBar barStyle="dark-content" translucent={true} backgroundColor="transparent"/>
 
             <ScrollView showsHorizontalScrollIndicator={false}>
 
-                <ImageBackground style={{width:width, paddingHorizontal:size(20),paddingTop:10}} source={require('../../assets/images/home-bg.png')} >
+                <ImageBackground style={{width:width, paddingHorizontal:size(20),paddingTop:40}} source={require('../../assets/images/home-bg.png')} >
                     <View style={styles.container}>
 
                         <View style={styles.primaryContainer}>
@@ -116,7 +116,7 @@ const Home = ()=>{
   
         
 
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
         borderRadius:8,
         paddingHorizontal:10,
         paddingTop:40,
-        marginTop:30
+        marginTop:30,
+        paddingBottom:20
      
     },
     cardPrimary:{

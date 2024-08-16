@@ -19,7 +19,7 @@ const Dropdown = (item : DropdownProps)=>{
             {
                 data.map((data)=>{
                     return(
-                        <Pressable style={{flexDirection:'row', alignItems:'center', marginVertical:5, gap:10}}>
+                        <Pressable key={data.label} style={{flexDirection:'row', alignItems:'center', marginVertical:5, gap:10}}>
                             <RadioButton clicked={value == data.value}  onPress={()=> {getValue(data.value); setValue(data.value)}}/>
                             <Text>{data.value}</Text>
                         </Pressable>

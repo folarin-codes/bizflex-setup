@@ -57,9 +57,10 @@ const AirtimeBulk = ()=>{
                     <Text style={{textAlign:'center', fontFamily:'regular', color:COLORS.text3}}>You currently do not have any bulk purchase</Text>
                 </View>
 
-                <View style={{marginVertical:height(10)}}>
-                    <CustomButton title="Proceed" disabled/>
-                </View>
+            
+            <View style={{marginTop:height(10)}}>
+                <CustomButton title="Proceed" disabled/>
+            </View>
 
             </ScrollView>
 
