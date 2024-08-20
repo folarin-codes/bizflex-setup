@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {View,Image, ImageBackground, Text, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
+import {View,Image, ImageBackground, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView} from 'react-native'
 import CustomHeader from "@/components/CustomHeader";
 import { generalStyles } from "@/theme/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,46 +18,51 @@ const AirtimeBulk = ()=>{
         <SafeAreaView style={generalStyles.container}>
             <CustomHeader text="Airtime Bulk Purchase"/>
 
-            <ImageBackground source={require('../../assets/images/Top.png')} style={{paddingVertical:42, marginTop:20}}>
+            <ScrollView showsVerticalScrollIndicator={false}>
 
-                <Text style={{textAlign:'center'}}>Total</Text>
+                <ImageBackground source={require('../../assets/images/Top.png')} style={{paddingVertical:42, marginTop:20}}>
 
-                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:10}}>
-                    <Text style={{textAlign:'center', color:COLORS.brown, fontFamily:'semibold', fontSize:size(SIZES.larger)}}>₦0.00</Text>
-                    <Image style={{width:16, height:16}} source={require('../../assets/images/eye.png')} tintColor={COLORS.brown}/>
+                    <Text style={{textAlign:'center', fontFamily:"medium", color:COLORS.white}}>Total</Text>
+
+                    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:10}}>
+                        <Text style={{textAlign:'center', color:COLORS.brown, fontFamily:'semibold', fontSize:size(SIZES.larger)}}>₦0.00</Text>
+                        <Image style={{width:16, height:16}} source={require('../../assets/images/eye.png')} tintColor={COLORS.brown}/>
+                    </View>
+
+                    <Text style={{textAlign:'center', color:COLORS.white, fontFamily:'regular'}}>Charges: <Text style={{fontWeight:'bold'}}>₦25</Text> </Text>
+
+                </ImageBackground>
+
+                <View style={{flexDirection:'row', justifyContent:'space-between', marginVertical:20}}>
+                    <TouchableOpacity style={styles.option}>
+                        <Text style={{fontFamily:'semibold', color:COLORS.primary, fontSize:20}}>+</Text>
+                        <Text style={styles.optionText}>Add Purchase</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.option} onPress={()=> bulkRef.current.open()}>
+                        <Image style={{width:16, height:16}} source={require('../../assets/images/export.png')}/>
+                        <Text style={styles.optionText}>Upload Purchase</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <Text style={{textAlign:'center', color:COLORS.white, fontFamily:'regular'}}>Charges: <Text style={{fontWeight:'bold'}}>₦25</Text> </Text>
+                <View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'F3F7FF', marginVertical:20}}>
+                    <Text style={styles.text}>From</Text>
+                    <Text style={styles.text}>To</Text>
+                    <Text style={styles.text}>Amount</Text>
+                </View>
 
-            </ImageBackground>
+                <View style={{marginTop:50}}>
+                    <Image style={{width:109, height:106, alignSelf:'center'}} source={require('../../assets/images/empty.png')}/>
 
-            <View style={{flexDirection:'row', justifyContent:'space-between', marginVertical:20}}>
-                <TouchableOpacity style={styles.option}>
-                    <Text style={{fontFamily:'semibold', color:COLORS.primary, fontSize:20}}>+</Text>
-                    <Text style={styles.optionText}>Add Purchase</Text>
-                </TouchableOpacity>
+                    <Text style={{textAlign:'center', fontFamily:'regular', color:COLORS.text3}}>You currently do not have any bulk purchase</Text>
+                </View>
 
-                <TouchableOpacity style={styles.option} onPress={()=> bulkRef.current.open()}>
-                    <Image style={{width:16, height:16}} source={require('../../assets/images/export.png')}/>
-                    <Text style={styles.optionText}>Upload Purchase</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'F3F7FF', marginVertical:20}}>
-                <Text style={styles.text}>From</Text>
-                <Text style={styles.text}>To</Text>
-                <Text style={styles.text}>Amount</Text>
-            </View>
-
-            <View style={{marginTop:50}}>
-                <Image style={{width:109, height:106, alignSelf:'center'}} source={require('../../assets/images/empty.png')}/>
-
-                <Text style={{textAlign:'center', fontFamily:'regular', color:COLORS.text3}}>You currently do not have any bulk purchase</Text>
-            </View>
-
-            <View style={{marginTop:height(15)}}>
+            
+            <View style={{marginTop:height(10)}}>
                 <CustomButton title="Proceed" disabled/>
             </View>
+
+            </ScrollView>
 
             <RBSheet ref={bulkRef} customStyles={{
                 container:{
@@ -113,6 +118,7 @@ const AirtimeBulk = ()=>{
 
 
                 </View>
+            
 
             </RBSheet>
 

@@ -61,7 +61,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={focused ?icons.savingsFocused : icons.savings}
                 color={focused? COLORS.primary : COLORS.text}
-                name="Savings"
+                name="Saving"
                 focused={focused}
               />
             ),

@@ -1,11 +1,13 @@
 import { generalStyles } from "@/theme/styles";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context"
-import {View, Text, Image, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
+import {View, Text, Image, TouchableOpacity, StyleSheet, TextInput, ScrollView} from 'react-native'
 import CustomButton from "@/components/CustomButton";
 import CustomHeader from "@/components/CustomHeader";
 import { height, width, size } from "react-native-responsive-sizes";
 import {COLORS, SIZES} from '../../theme/theme'
+
+import Dropdown from 'react-native-input-select';
 
 
 const cable = require('../../assets/images/cable2.png')
@@ -15,6 +17,7 @@ const Cable = ()=>{
         <SafeAreaView style={generalStyles.container}>
             <CustomHeader text="Cable TV" image={cable}/>
 
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{marginTop:20}}>
                 <Text style={styles.text}>Select Biller</Text>
                 
@@ -41,18 +44,19 @@ const Cable = ()=>{
             <View style={{marginTop:20}}>
                     <Text style={styles.text}>Product</Text>
                     <View>
-                        <TextInput style={[styles.input, {fontFamily:'regular'}]} placeholder="Select count to pay from"/>
-                        <Image style={{height:24, width:24,position:'absolute', right:20, top:15}} source={require('../../assets/images/arrow-down.png')}/>
+                        {/* <TextInput style={[styles.input, {fontFamily:'regular'}]} placeholder="Select count to pay from"/>
+                        <Image style={{height:24, width:24,position:'absolute', right:20, top:15}} source={require('../../assets/images/arrow-down.png')}/> */}
+
+                        <Dropdown dropdownStyle={styles.input} placeholder='Select product'/>
 
                     </View>
             </View>
 
-            <View style={{marginTop:20}}>
+            <View style={{marginTop:10}}>
                     <Text style={styles.text}>Smart Card Number</Text>
                     <View>
                         <TextInput style={[styles.input, {fontFamily:'regular'}]} placeholder="Select count to pay from"/>
-                        <Image style={{height:24, width:24,position:'absolute', right:20, top:15}} source={require('../../assets/images/arrow-down.png')}/>
-
+                       
                     </View>
             </View>
 
@@ -71,9 +75,11 @@ const Cable = ()=>{
                     </View>
             </View>
 
-            <View style={{marginVertical:height(12)}}>
+            <View style={{marginVertical:height(8)}}>
                 <CustomButton title="Proceed" disabled/>
             </View>
+
+            </ScrollView>
 
 
 
@@ -101,7 +107,7 @@ const styles = StyleSheet.create({
 
     },
 
-    input:{borderWidth:1 , borderColor:'#C6D8FF', paddingVertical:15, borderRadius:8, backgroundColor:COLORS.white, fontFamily:'semibold', color:COLORS.text, paddingHorizontal:20},
+    input:{borderWidth:1 , borderColor:'#C6D8FF', paddingVertical:15, borderRadius:8, backgroundColor:COLORS.white, fontFamily:'semibold', color:COLORS.text, paddingHorizontal:20, height:60},
     text:{
         fontFamily:'medium',
         marginBottom:5
